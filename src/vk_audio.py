@@ -1,4 +1,4 @@
-import requests
+from requests import Session
 
 class VkAudio:
     def __init__(
@@ -8,7 +8,7 @@ class VkAudio:
         self.api = "https://api.vk.com/method"
         self.api_version = api_version
         self.access_token = access_token
-        self.session = requests.Session()
+        self.session = Session()
         self.session.headers = {
             "User-Agent": "VKAndroidApp/6.2-5091 (Android 9; SDK 28; samsungexynos7870; samsung j6lte; 720x1450)"
         }
@@ -56,8 +56,7 @@ class VkAudio:
             playlist_id: int,
             audio_ids: str) -> dict:
             return self.session.get(
-                f"{self.api}/audio.removeFromPlaylist?access_token={self.access_token}&owner_id={owner_id}&playlist_id={playlist_id}&audio_ids={audio_ids}&v={self.api_version}",
-                headers=self.headers).json()
+                f"{self.api}/audio.removeFromPlaylist?access_token={self.access_token}&owner_id={owner_id}&playlist_id={playlist_id}&audio_ids={audio_ids}&v={self.api_version}").json()
 
     def delete_audio(
             self,
@@ -80,8 +79,7 @@ class VkAudio:
             query: str,
             count: int = 10) -> dict:
         return self.session.get(
-                f"{self.api}/audio.search?access_token={self.access_token}&q={query}&count={count}&v={self.api_version}",
-                headers=self.headers).json()
+                f"{self.api}/audio.search?access_token={self.access_token}&q={query}&count={count}&v={self.api_version}").json()
     
     def reorder_audio(
             self,
@@ -152,13 +150,11 @@ class VkAudio:
         
     def get_audios_count(self, owner_id: int) -> dict:
             return self.session.get(
-                f"{self.api}/audio.getCount?access_token={self.access_token}&owner_id={owner_id}&v={self.api_version}",
-                headers=self.headers).json()
+                f"{self.api}/audio.getCount?access_token={self.access_token}&owner_id={owner_id}&v={self.api_version}").json()
         
     def get_lyrics_for_audio(self, lyrics_id: int) -> dict:
             return self.session.get(
-                f"{self.api}/audio.getLyrics?access_token={self.access_token}&lyrics_id={lyrics_id}&v={self.api_version}",
-                headers=self.headers).json()
+                f"{self.api}/audio.getLyrics?access_token={self.access_token}&lyrics_id={lyrics_id}&v={self.api_version}").json()
         
     def get_playlist_by_id(
             self,
