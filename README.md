@@ -1,9 +1,11 @@
-# vk_audio.py
+<h1>
+  <img src="https://vk.com/images/icons/pwa/apple/default.png?15" width="28" style="vertical-align:middle;" />
+  vk_audio.py
+</h1>
 
 > Web-API for [VKontakte](https://vk.com) Audio API to search, manage, and organise music in VK programmatically
 
 ---
-
 ## Quick Start
 
 ```python
