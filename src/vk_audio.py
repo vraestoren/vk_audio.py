@@ -13,57 +13,81 @@ class VkAudio:
             "User-Agent": "VKAndroidApp/6.2-5091 (Android 9; SDK 28; samsungexynos7870; samsung j6lte; 720x1450)"
         }
 
-    def get_audio(self, owner_id: int, count: int = 100) -> dict:
+    def _get(self, method: str, params: dict = None) -> dict:
+        payload = {
+            "access_token": self.access_token,
+            "v": self.api_version
+        }
+        if params:
+            payload.update(params)
         return self.session.get(
-            f"{self.api}/audio.get?access_token={self.access_token}&owner_id={owner_id}&count={count}&v={self.api_version}").json()
+            f"{self.api}/{method}", params=payload).json()
+
+    def get_audio(self, owner_id: int, count: int = 100) -> dict:
+        data = {
+            "owner_id": owner_id,
+            "count": count
+        }
+        return self._get("audio.get", data)
 
     def add_audio(self, owner_id: int, audio_id: int) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.add?access_token={self.access_token}&owner_id={owner_id}&audio_id={audio_id}&v={self.api_version}").json()
+        data = {
+            "owner_id": owner_id,
+            "audio_id": audio_id
+        }
+        return self._get("audio.add", data)
 
     def add_audio_to_playlist(
             self,
             owner_id: int,
             playlist_id: int,
             audio_ids: str) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.addToPlaylist?access_token={self.access_token}&owner_id={owner_id}&playlist_id={playlist_id}&audio_ids={audio_ids}&v={self.api_version}").json()
-    
-    def create_playlist(
-            self,
-            owner_id: int,
-            title: str) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.createPlaylist?access_token={self.access_token}&owner_id={owner_id}&title={title}&v={self.api_version}").json()
+        data = {
+            "owner_id": owner_id,
+            "playlist_id": playlist_id,
+            "audio_ids": audio_ids
+        }
+        return self._get("audio.addToPlaylist", data)
 
-    def delete_playlist(
-            self,
-            owner_id: int,
-            playlist_id: int) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.deletePlaylist?access_token={self.access_token}&owner_id={owner_id}&playlist_id={playlist_id}&v={self.api_version}").json()
+    def create_playlist(self, owner_id: int, title: str) -> dict:
+        data = {
+            "owner_id": owner_id,
+            "title": title
+        }
+        return self._get("audio.createPlaylist", data)
 
-    def follow_playlist(
-            self,
-            owner_id: int,
-            playlist_id: int) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.followPlaylist?access_token={self.access_token}&owner_id={owner_id}&playlist_id={playlist_id}&v={self.api_version}").json()
+    def delete_playlist(self, owner_id: int, playlist_id: int) -> dict:
+        data = {
+            "owner_id": owner_id,
+            "playlist_id": playlist_id
+        }
+        return self._get("audio.deletePlaylist", data)
+
+    def follow_playlist(self, owner_id: int, playlist_id: int) -> dict:
+        data = {
+            "owner_id": owner_id,
+            "playlist_id": playlist_id
+        }
+        return self._get("audio.followPlaylist", data)
 
     def remove_audios_from_playlist(
             self,
             owner_id: int,
             playlist_id: int,
             audio_ids: str) -> dict:
-            return self.session.get(
-                f"{self.api}/audio.removeFromPlaylist?access_token={self.access_token}&owner_id={owner_id}&playlist_id={playlist_id}&audio_ids={audio_ids}&v={self.api_version}").json()
+        data = {
+            "owner_id": owner_id,
+            "playlist_id": playlist_id,
+            "audio_ids": audio_ids
+        }
+        return self._get("audio.removeFromPlaylist", data)
 
-    def delete_audio(
-            self,
-            owner_id: int,
-            audio_id: int) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.delete?access_token={self.access_token}&owner_id={owner_id}&audio_id={audio_id}&v={self.api_version}").json()
+    def delete_audio(self, owner_id: int, audio_id: int) -> dict:
+        data = {
+            "owner_id": owner_id,
+            "audio_id": audio_id
+        }
+        return self._get("audio.delete", data)
 
     def edit_audio(
             self,
@@ -71,103 +95,136 @@ class VkAudio:
             audio_id: int,
             artist: str,
             title: str) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.edit?access_token={self.access_token}&owner_id={owner_id}&audio_id={audio_id}&artist={artist}&title={title}&v={self.api_version}").json()
-    
-    def search_audio(
-            self,
-            query: str,
-            count: int = 10) -> dict:
-        return self.session.get(
-                f"{self.api}/audio.search?access_token={self.access_token}&q={query}&count={count}&v={self.api_version}").json()
-    
+        data = {
+            "owner_id": owner_id,
+            "audio_id": audio_id,
+            "artist": artist,
+            "title": title
+        }
+        return self._get("audio.edit", data)
+
+    def search_audio(self, query: str, count: int = 10) -> dict:
+        data = {
+            "q": query,
+            "count": count
+        }
+        return self._get("audio.search", data)
+
     def reorder_audio(
             self,
             owner_id: int,
             audio_id: int,
             before_audio_id: int) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.reorder?access_token={self.access_token}&owner_id={owner_id}&audio_id={audio_id}&before={before_audio_id}&v={self.api_version}").json()
-    
-    def search_albums(
-            self,
-            query: str,
-            count: int = 10) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.searchAlbums?access_token={self.access_token}&q={query}&count={count}&v={self.api_version}").json()
-    
-    def search_artists(
-            self,
-            query: str,
-            count: int = 10) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.searchArtists?access_token={self.access_token}&q={query}&count={count}&v={self.api_version}").json()
-    
+        data = {
+            "owner_id": owner_id,
+            "audio_id": audio_id,
+            "before": before_audio_id
+        }
+        return self._get("audio.reorder", data)
+
+    def search_albums(self, query: str, count: int = 10) -> dict:
+        data = {
+            "q": query,
+            "count": count
+        }
+        return self._get("audio.searchAlbums", data)
+
+    def search_artists(self, query: str, count: int = 10) -> dict:
+        data = {
+            "q": query,
+            "count": count
+        }
+        return self._get("audio.searchArtists", data)
+
     def search_playlists(
             self,
             query: str,
             count: int = 10,
             filters: str = "albums") -> dict:
-        return self.session.get(
-            f"{self.api}/audio.searchPlaylists?access_token={self.access_token}&q={query}&count={count}&filters={filters}&v={self.api_version}").json()
-    
+        data = {
+            "q": query,
+            "count": count,
+            "filters": filters
+        }
+        return self._get("audio.searchPlaylists", data)
+
     def get_popular_audios(self, count: int = 10) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.getPopular?access_token={self.access_token}&count={count}&v={self.api_version}").json()
-    
+        data = {
+            "count": count
+        }
+        return self._get("audio.getPopular", data)
+
     def get_suggested_audios(
             self,
             target_id: str,
             count: int = 10,
             offset: int = 20) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.getRecommendations?access_token={self.access_token}&target_id={target_id}&count={count}&offset={offset}&v={self.api_version}").json()
-    
+        data = {
+            "target_id": target_id,
+            "count": count,
+            "offset": offset
+        }
+        return self._get("audio.getRecommendations", data)
+
     def get_albums_by_artist(
-            self,
-            artist_id: int,
-            count: int = 10) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.getAlbumsByArtist?access_token={self.access_token}&artist_id={artist_id}&count={count}&v={self.api_version}").json()
-    
+            self, artist_id: int, count: int = 10) -> dict:
+        data = {
+            "artist_id": artist_id,
+            "count": count
+        }
+        return self._get("audio.getAlbumsByArtist", data)
+
     def get_artist_by_id(
-            self,
-            artist_id: int,
-            extended: int = 1) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.getArtistById?access_token={self.access_token}&artist_id={artist_id}&extended={extended}&v={self.api_version}").json()
-    
+            self, artist_id: int, extended: int = 1) -> dict:
+        data = {
+            "artist_id": artist_id,
+            "extended": extended
+        }
+        return self._get("audio.getArtistById", data)
+
     def get_audios_by_artist(
-            self,
-            artist_id: int,
-            count: int = 10) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.getAudiosByArtist?access_token={self.access_token}&artist_id={artist_id}&count={count}&v={self.api_version}").json()
-        
+            self, artist_id: int, count: int = 10) -> dict:
+        data = {
+            "artist_id": artist_id,
+            "count": count
+        }
+        return self._get("audio.getAudiosByArtist", data)
+
     def get_audio_by_id(self, audio_ids: str) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.getById?access_token={self.access_token}&audios={audio_ids}&v={self.api_version}").json()
-        
+        data = {
+            "audios": audio_ids
+        }
+        return self._get("audio.getById", data)
+
     def get_audios_count(self, owner_id: int) -> dict:
-            return self.session.get(
-                f"{self.api}/audio.getCount?access_token={self.access_token}&owner_id={owner_id}&v={self.api_version}").json()
-        
+        data = {
+            "owner_id": owner_id
+        }
+        return self._get("audio.getCount", data)
+
     def get_lyrics_for_audio(self, lyrics_id: int) -> dict:
-            return self.session.get(
-                f"{self.api}/audio.getLyrics?access_token={self.access_token}&lyrics_id={lyrics_id}&v={self.api_version}").json()
-        
+        data = {
+            "lyrics_id": lyrics_id
+        }
+        return self._get("audio.getLyrics", data)
+
     def get_playlist_by_id(
             self,
             owner_id: int,
             playlist_id: int,
             access_key: int,
             count: int = 10) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.getPlaylistById?access_token={self.access_token}&owner_id={owner_id}&playlist_id={playlist_id}&access_key={access_key}&count={count}&v={self.api_version}").json()
-        
-    def get_playlists(
-            self,
-            owner_id: int,
-            count: int = 10) -> dict:
-        return self.session.get(
-            f"{self.api}/audio.getPlaylists?access_token={self.access_token}&owner_id={owner_id}&count={count}&v={self.api_version}").json()
+        data = {
+            "owner_id": owner_id,
+            "playlist_id": playlist_id,
+            "access_key": access_key,
+            "count": count
+        }
+        return self._get("audio.getPlaylistById", data)
+
+    def get_playlists(self, owner_id: int, count: int = 10) -> dict:
+        data = {
+            "owner_id": owner_id,
+            "count": count
+        }
+        return self._get("audio.getPlaylists", data)
