@@ -24,70 +24,70 @@ class VkAudio:
             f"{self.api}/{method}", params=payload).json()
 
     def get_audio(self, owner_id: int, count: int = 100) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "count": count
         }
-        return self._get("audio.get", data)
+        return self._get("audio.get", params)
 
     def add_audio(self, owner_id: int, audio_id: int) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "audio_id": audio_id
         }
-        return self._get("audio.add", data)
+        return self._get("audio.add", params)
 
     def add_audio_to_playlist(
             self,
             owner_id: int,
             playlist_id: int,
             audio_ids: str) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "playlist_id": playlist_id,
             "audio_ids": audio_ids
         }
-        return self._get("audio.addToPlaylist", data)
+        return self._get("audio.addToPlaylist", params)
 
     def create_playlist(self, owner_id: int, title: str) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "title": title
         }
-        return self._get("audio.createPlaylist", data)
+        return self._get("audio.createPlaylist", params)
 
     def delete_playlist(self, owner_id: int, playlist_id: int) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "playlist_id": playlist_id
         }
-        return self._get("audio.deletePlaylist", data)
+        return self._get("audio.deletePlaylist", params)
 
     def follow_playlist(self, owner_id: int, playlist_id: int) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "playlist_id": playlist_id
         }
-        return self._get("audio.followPlaylist", data)
+        return self._get("audio.followPlaylist", params)
 
     def remove_audios_from_playlist(
             self,
             owner_id: int,
             playlist_id: int,
             audio_ids: str) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "playlist_id": playlist_id,
             "audio_ids": audio_ids
         }
-        return self._get("audio.removeFromPlaylist", data)
+        return self._get("audio.removeFromPlaylist", params)
 
     def delete_audio(self, owner_id: int, audio_id: int) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "audio_id": audio_id
         }
-        return self._get("audio.delete", data)
+        return self._get("audio.delete", params)
 
     def edit_audio(
             self,
@@ -95,118 +95,118 @@ class VkAudio:
             audio_id: int,
             artist: str,
             title: str) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "audio_id": audio_id,
             "artist": artist,
             "title": title
         }
-        return self._get("audio.edit", data)
+        return self._get("audio.edit", params)
 
     def search_audio(self, query: str, count: int = 10) -> dict:
-        data = {
+        params = {
             "q": query,
             "count": count
         }
-        return self._get("audio.search", data)
+        return self._get("audio.search", params)
 
     def reorder_audio(
             self,
             owner_id: int,
             audio_id: int,
             before_audio_id: int) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "audio_id": audio_id,
             "before": before_audio_id
         }
-        return self._get("audio.reorder", data)
+        return self._get("audio.reorder", params)
 
     def search_albums(self, query: str, count: int = 10) -> dict:
-        data = {
+        params = {
             "q": query,
             "count": count
         }
-        return self._get("audio.searchAlbums", data)
+        return self._get("audio.searchAlbums", params)
 
     def search_artists(self, query: str, count: int = 10) -> dict:
-        data = {
+        params = {
             "q": query,
             "count": count
         }
-        return self._get("audio.searchArtists", data)
+        return self._get("audio.searchArtists", params)
 
     def search_playlists(
             self,
             query: str,
             count: int = 10,
             filters: str = "albums") -> dict:
-        data = {
+        params = {
             "q": query,
             "count": count,
             "filters": filters
         }
-        return self._get("audio.searchPlaylists", data)
+        return self._get("audio.searchPlaylists", params)
 
     def get_popular_audios(self, count: int = 10) -> dict:
-        data = {
+        params = {
             "count": count
         }
-        return self._get("audio.getPopular", data)
+        return self._get("audio.getPopular", params)
 
     def get_suggested_audios(
             self,
             target_id: str,
             count: int = 10,
             offset: int = 20) -> dict:
-        data = {
+        params = {
             "target_id": target_id,
             "count": count,
             "offset": offset
         }
-        return self._get("audio.getRecommendations", data)
+        return self._get("audio.getRecommendations", params)
 
     def get_albums_by_artist(
             self, artist_id: int, count: int = 10) -> dict:
-        data = {
+        params = {
             "artist_id": artist_id,
             "count": count
         }
-        return self._get("audio.getAlbumsByArtist", data)
+        return self._get("audio.getAlbumsByArtist", params)
 
     def get_artist_by_id(
             self, artist_id: int, extended: int = 1) -> dict:
-        data = {
+        params = {
             "artist_id": artist_id,
             "extended": extended
         }
-        return self._get("audio.getArtistById", data)
+        return self._get("audio.getArtistById", params)
 
     def get_audios_by_artist(
             self, artist_id: int, count: int = 10) -> dict:
-        data = {
+        params = {
             "artist_id": artist_id,
             "count": count
         }
-        return self._get("audio.getAudiosByArtist", data)
+        return self._get("audio.getAudiosByArtist", params)
 
     def get_audio_by_id(self, audio_ids: str) -> dict:
-        data = {
+        params = {
             "audios": audio_ids
         }
-        return self._get("audio.getById", data)
+        return self._get("audio.getById", params)
 
     def get_audios_count(self, owner_id: int) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id
         }
-        return self._get("audio.getCount", data)
+        return self._get("audio.getCount", params)
 
     def get_lyrics_for_audio(self, lyrics_id: int) -> dict:
-        data = {
+        params = {
             "lyrics_id": lyrics_id
         }
-        return self._get("audio.getLyrics", data)
+        return self._get("audio.getLyrics", params)
 
     def get_playlist_by_id(
             self,
@@ -214,17 +214,17 @@ class VkAudio:
             playlist_id: int,
             access_key: int,
             count: int = 10) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "playlist_id": playlist_id,
             "access_key": access_key,
             "count": count
         }
-        return self._get("audio.getPlaylistById", data)
+        return self._get("audio.getPlaylistById", params)
 
     def get_playlists(self, owner_id: int, count: int = 10) -> dict:
-        data = {
+        params = {
             "owner_id": owner_id,
             "count": count
         }
-        return self._get("audio.getPlaylists", data)
+        return self._get("audio.getPlaylists", params)
