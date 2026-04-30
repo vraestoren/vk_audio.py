@@ -4,7 +4,7 @@ class VkAudio:
     def __init__(
             self,
             access_token: str,
-            api_version: str = "5.122") -> None:
+            api_version: str = "5.199") -> None:
         self.api = "https://api.vk.com/method"
         self.api_version = api_version
         self.access_token = access_token
