@@ -22,11 +22,11 @@ print(popular)
 
 ## Features
 
-- 🎵 **Audio** — get, add, delete, edit, reorder tracks
-- 🔍 **Search** — search tracks, albums, artists, and playlists
-- 🎤 **Artists** — get artist info, albums, and tracks by artist
-- 📋 **Playlists** — create, delete, follow, and manage playlist contents
-- ⭐ **Recommendations** — suggested and popular tracks
+-  **Audio** — get, add, delete, edit, reorder tracks
+-  **Search** — search tracks, albums, artists, and playlists
+-  **Artists** — get artist info, albums, and tracks by artist
+-  **Playlists** — create, delete, follow, and manage playlist contents
+-  **Recommendations** — suggested and popular tracks
 
 ---
 
